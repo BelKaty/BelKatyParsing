@@ -1,0 +1,220 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/BelKaty/BelKatyParsing/blob/main/HW4_parsing\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "T3fwNXFA2z9r"
+      },
+      "source": [
+        "Получение программы передач Первого канала https://github.com/BelKaty/BelKatyParsing/blob/main/Скриншот%20от%202024-05-25%2016-27-06.png\n",
+        "csv - файл https://github.com/BelKaty/BelKatyParsing/blob/main/program1.csv\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install lxml"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "M4BtMCyl21qM",
+        "outputId": "cda8474f-6401-4478-8b3e-82c7f1bc0563"
+      },
+      "execution_count": 1,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: lxml in /usr/local/lib/python3.10/dist-packages (4.9.4)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "id": "X4BmJaet2z9w"
+      },
+      "outputs": [],
+      "source": [
+        "# Импорт библиотек\n",
+        "import requests\n",
+        "import csv\n",
+        "from lxml import html\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 3,
+      "metadata": {
+        "id": "f3e_EYEQ2z9y"
+      },
+      "outputs": [],
+      "source": [
+        "# Задание url и отправка запроса\n",
+        "# Определение целевого URL\n",
+        "url = \"https://tv.yandex.ru/channel/pervyy-16\"\n",
+        "\n",
+        "# Отправка HTTP GET запроса на целевой URL с пользовательским заголовком User-Agent\n",
+        "response = requests.get(url, headers = {\n",
+        "   'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'})\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 4,
+      "metadata": {
+        "id": "YdU4jtzj2z9z"
+      },
+      "outputs": [],
+      "source": [
+        "# Парсинг HTML-содержимого ответа с помощью библиотеки lxml\n",
+        "tree = html.fromstring(response.content)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 5,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "TAkvOBeN2z9z",
+        "outputId": "f8ea75d2-d63f-4fba-93c6-21c086196838"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "07:00 А зори здесь тихие... К 100-летию со дня рождения Бориса Васильева\n",
+            "/program/a-zori-zdes-tihie-k-100-letiyu-so-dnya-rojdeniya-borisa-vasileva-7532016?eventId=225135361\n",
+            "10:00 Я люблю мою страну\n",
+            "/program/ya-lyublyu-moyu-stranu-7326143?eventId=225135362\n",
+            "11:00 Вечерние новости (с субтитрами)\n",
+            "/program/vechernie-novosti-s-subtitrami-7326074?eventId=225135363\n",
+            "11:20 Поле чудес\n",
+            "/program/pole-chudes-7326166?eventId=225135364\n",
+            "12:20 Эксклюзив\n",
+            "/program/eksklyuziv-7420183?eventId=225135365\n",
+            "13:10 Михаил Задорнов: вся жизнь. 3-я часть\n",
+            "/program/mihail-zadornov-vsya-jizn-7420403?eventId=225135366\n",
+            "14:00 Время\n",
+            "/program/vremya-7326096?eventId=225135367\n",
+            "14:35 Клуб Веселых и Находчивых. Высшая лига\n",
+            "/program/klub-veselyh-i-nahodchivyh-vysshaya-liga-7396701?eventId=225135368\n",
+            "16:30 За гранью реальности\n",
+            "/program/za-granyu-realnosti-6376449?eventId=225135369\n",
+            "18:20 ПОДКАСТ.ЛАБ. Все хотят летать\n",
+            "/program/podkastlab-7312782?eventId=225135370\n",
+            "18:55 ПОДКАСТ.ЛАБ. Драгоценные истории\n",
+            "/program/podkastlab-7312782?eventId=225135371\n",
+            "19:30 ПОДКАСТ.ЛАБ. Кот Шрёдингера\n",
+            "/program/podkastlab-7312782?eventId=225135372\n",
+            "20:05 ПОДКАСТ.ЛАБ. Психика\n",
+            "/program/podkastlab-7312782?eventId=225135373\n",
+            "21:00 Время\n",
+            "/program/vremya-7326096?eventId=225135374\n",
+            "21:35 ПОДКАСТ.ЛАБ. Не лыком шиты\n",
+            "/program/podkastlab-7312782?eventId=225135375\n",
+            "22:10 ПОДКАСТ.ЛАБ. Гори огнем!\n",
+            "/program/podkastlab-7312782?eventId=225135376\n",
+            "22:45 ПОДКАСТ.ЛАБ. 20 лет спустя\n",
+            "/program/podkastlab-7312782?eventId=225135377\n",
+            "23:00 Новости\n",
+            "/program/novosti-7326106?eventId=225135378\n",
+            "23:10 ПОДКАСТ.ЛАБ. 20 лет спустя\n",
+            "/program/podkastlab-7312782?eventId=225135379\n",
+            "23:35 ПОДКАСТ.ЛАБ. Обман веществ\n",
+            "/program/podkastlab-7312782?eventId=225135380\n",
+            "00:15 Играй гармонь любимая!\n",
+            "/program/igray-garmon-lyubimaya-7326154?eventId=225135381\n",
+            "00:55 Часовой\n",
+            "/program/chasovoy-7326156?eventId=225135382\n",
+            "01:25 Здоровье\n",
+            "/program/zdorove-7326157?eventId=225135383\n",
+            "02:25 Непутевые заметки с Дмитрием Крыловым\n",
+            "/program/neputevye-zametki-s-dmitriem-krylovym-7326161?eventId=225135384\n",
+            "03:00 Новости (с субтитрами)\n",
+            "/program/novosti-s-subtitrami-7453735?eventId=225135385\n",
+            "03:20 Жизнь своих\n",
+            "/program/jizn-svoih-7326162?eventId=225135386\n",
+            "04:10 Повара на колесах\n",
+            "/program/povara-na-kolesah-7326163?eventId=225135387\n",
+            "[['07:00', 'А зори здесь тихие... К 100-летию со дня рождения Бориса Васильева'], ['10:00', 'Я люблю мою страну'], ['11:00', 'Вечерние новости (с субтитрами)'], ['11:20', 'Поле чудес'], ['12:20', 'Эксклюзив'], ['13:10', 'Михаил Задорнов: вся жизнь. 3-я часть'], ['14:00', 'Время'], ['14:35', 'Клуб Веселых и Находчивых. Высшая лига'], ['16:30', 'За гранью реальности'], ['18:20', 'ПОДКАСТ.ЛАБ. Все хотят летать'], ['18:55', 'ПОДКАСТ.ЛАБ. Драгоценные истории'], ['19:30', 'ПОДКАСТ.ЛАБ. Кот Шрёдингера'], ['20:05', 'ПОДКАСТ.ЛАБ. Психика'], ['21:00', 'Время'], ['21:35', 'ПОДКАСТ.ЛАБ. Не лыком шиты'], ['22:10', 'ПОДКАСТ.ЛАБ. Гори огнем!'], ['22:45', 'ПОДКАСТ.ЛАБ. 20 лет спустя'], ['23:00', 'Новости'], ['23:10', 'ПОДКАСТ.ЛАБ. 20 лет спустя'], ['23:35', 'ПОДКАСТ.ЛАБ. Обман веществ'], ['00:15', 'Играй гармонь любимая!'], ['00:55', 'Часовой'], ['01:25', 'Здоровье'], ['02:25', 'Непутевые заметки с Дмитрием Крыловым'], ['03:00', 'Новости (с субтитрами)'], ['03:20', 'Жизнь своих'], ['04:10', 'Повара на колесах']]\n"
+          ]
+        }
+      ],
+      "source": [
+        "table_items = tree.xpath('//li[@class=\"channel-schedule__event\"]')\n",
+        "\n",
+        "table = []\n",
+        "\n",
+        "for item in table_items:\n",
+        "    start_time = item.xpath('.//time/text()')[0].strip()\n",
+        "    program_name = item.xpath('.//div/h3/span/text()')[0].strip().replace('\"','').replace(',','')\n",
+        "    link = item.xpath('.//a/@href')[0]\n",
+        "    table.append([start_time, program_name])\n",
+        "\n",
+        "    print(start_time, end=' ')\n",
+        "    print(program_name)\n",
+        "    print(link)\n",
+        "\n",
+        "print(table)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 6,
+      "metadata": {
+        "id": "u0iFL4ba2z90"
+      },
+      "outputs": [],
+      "source": [
+        "with open('./program1.csv', 'w', newline='', encoding='utf8') as f:\n",
+        "    writer = csv.writer(f)\n",
+        "    writer.writerows(table)\n",
+        "\n"
+      ]
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.12.2"
+    },
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
