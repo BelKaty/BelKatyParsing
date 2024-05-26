@@ -1,7 +1,6 @@
 import scrapy
 from bookparser.items import BookparserItem
 
-
 class LabirintruSpider(scrapy.Spider):
     """
     Класс занимается парсингом web сайта
